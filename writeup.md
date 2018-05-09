@@ -29,14 +29,14 @@ The code for this step is contained in IPython notebook named `training_session`
 
 I started by reading in all the `vehicle` and `non-vehicle` images as training data.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
-![][./output_images/car_nocar_image.PNG?raw=true]
+![](./output_images/car_nocar_image.PNG?raw=true)
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
 Here is an example using the `RGB` color space and HOG parameters of `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
 
-![][./output_images/example_RGB_hog.PNG?raw=true]
+![](./output_images/example_RGB_hog.PNG?raw=true)
 
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
@@ -72,7 +72,7 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spat
 ### Video Implementation
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./project_video_out.mp4)
 
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.

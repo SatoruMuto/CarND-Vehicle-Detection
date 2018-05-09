@@ -25,7 +25,7 @@ This file is the writeup.
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in IPython notebook named `training_session`.  
+The code for this step is contained in jupyter notebook named `training_session.ipynb`.  
 
 I started by reading in all the `vehicle` and `non-vehicle` images as training data.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
@@ -37,11 +37,11 @@ Here is an example using the `RGB` color space and HOG parameters of `orientatio
 
 
 ![](./output_images/example_RGB_hog.PNG?raw=true)
-
+this image is not contained in `training_session.ipynb`
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
-Firstly I tried to rely on test accuracy of the classification, however this test score seems not directly correlated to the detection accuracy in the video, therefore I used capture image (as provided as 6test images) to judge if parameter are good or not.
+Firstly I tried to rely on test accuracy of the classification, however this test score seems not directly correlated to the detection accuracy in the video, therefore I used capture image (as provided as 6 test images) to judge if parameter are good or not.
 
 I have tried several color space and parameters and found that the `RGB` color space and HOG parameters of `orientations=11`, `pixels_per_cell=(16, 16)` and `cells_per_block=(2, 2)`: works OK. 
 
@@ -55,18 +55,32 @@ I trained a linear SVM with the default parameters and used HOG feature only. I 
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-This is coded in Jupyter notebook named "Tracking_and_VideoStream_session", in the cell 12, function named `show_image(image)`.
+This is coded in Jupyter notebook named `Tracking_and_VideoStream_session.ipynb`, in the cell 12, function named `show_image(image)`.
 
-4 different window size has been set in order to detect vehicle in each position (large size will be used to detect car in close distance 
+3 different window size has been set in order to detect vehicle in each position (large size will be used to detect car in close distance with 50% overlap.
 
+here is the code for serch area and box size. 
+```
+    windows2 = slide_window(image, x_start_stop=[None, None], y_start_stop=[390,400+96], 
+                        xy_window=(96, 96), xy_overlap=(0.5, 0.5))
+    windows3 = slide_window(image, x_start_stop=[None, None], y_start_stop=[400,400+128], 
+                        xy_window=(128, 128), xy_overlap=(0.5, 0.5))
+    windows4 = slide_window(image, x_start_stop=[None, None], y_start_stop=[400,400+192], 
+                        xy_window=(192, 192), xy_overlap=(0.5, 0.5))
+```
 
-![alt text][image3]
+small window `(96,96)` is used to serch car in far position, and large window `(192,192)` is used to serch car near by. I also tried `(64,64)` and `(256,256)` window, and with more overlap up to 75%. However those made more false positive, and made program heavy.
+On the other hand, I also tried with 96 and 128, that also gave OK result, however white car position is sometime lost ( = program made false negative result) after the car go thru bridge. 
+Therefore 3 serch window size with 50% overlap seems a good balance for my feature extract method.  
+
+![](./output_images/box_image.PNG?raw=true)
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+I tuned parameters based on test image captured from video (described in HOG - 1 topic above), I tuned parameters to `orientations=11`, `pixels_per_cell=(16, 16)` and `cells_per_block=(2, 2)` with RGB color space, works OK. also window size is adjusted to reduce false positive and false negative as possible as I can.
+Here are example of pipeline result images:
 
-![alt text][image4]
+![](./output_images/show_image_result.PNG?raw=true)
 ---
 
 ### Video Implementation

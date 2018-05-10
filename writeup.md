@@ -37,6 +37,8 @@ Here is an example using the `RGB` color space and HOG parameters of `orientatio
 
 
 ![](./output_images/example_RGB_hog.PNG?raw=true)
+
+
 this image is not contained in `training_session.ipynb`
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
@@ -70,7 +72,7 @@ here is the code for serch area and box size.
 ```
 
 small window `(96,96)` is used to serch car in far position, and large window `(192,192)` is used to serch car near by. I also tried `(64,64)` and `(256,256)` window, and with more overlap up to 75%. However those made more false positive, and made program heavy.
-On the other hand, I also tried with 96 and 128, that also gave OK result, however white car position is sometime lost ( = program made false negative result) after the car go thru bridge. 
+On the other hand, I also tried `(96,96)` and `(128, 128)`  . As this parameter set result, white car position is sometime lost ( = program made false negative result) after the car go thru bridge. 
 Therefore 3 serch window size with 50% overlap seems a good balance for my feature extract method.  
 
 ![](./output_images/box_image.PNG?raw=true)
